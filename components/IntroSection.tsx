@@ -17,6 +17,18 @@ export default function IntroSection() {
         <h1 id="intro-title">{site.name}</h1>
         <p className="positioning">{site.positioning}</p>
         <p className="intro-copy">{site.introduction}</p>
+      </div>
+      <div className="intro-portrait">
+        <Image
+          src="/images/saujan-parajuli.jpg"
+          alt="Saujan Parajuli"
+          width={400}
+          height={400}
+          sizes="(max-width: 850px) 170px, 280px"
+          preload
+        />
+      </div>
+      <div className="intro-actions">
         <div className="button-row">
           <a className="button primary" href="#projects">
             View Projects <ArrowDown size={16} />
@@ -51,16 +63,6 @@ export default function IntroSection() {
         <p className="location">
           <MapPin size={14} /> {site.location}
         </p>
-      </div>
-      <div className="intro-portrait">
-        <Image
-          src="/images/saujan-parajuli.jpg"
-          alt="Saujan Parajuli"
-          width={400}
-          height={400}
-          sizes="(max-width: 850px) 160px, 260px"
-          preload
-        />
       </div>
     </section>
   );

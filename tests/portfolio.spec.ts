@@ -119,7 +119,7 @@ test("content, public files, and metadata are correct", async ({
 test("responsive layouts have no overflow and pass accessibility checks", async ({
   page,
 }) => {
-  for (const width of [375, 430, 768, 1024, 1440]) {
+  for (const width of [375, 430, 768, 1024, 1280, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
     expect(
@@ -139,15 +139,29 @@ test("responsive layouts have no overflow and pass accessibility checks", async 
     await expect(portrait).toHaveAttribute("src", /\/_next\/image\?/);
     const portraitBounds = (await portrait.boundingBox())!;
     const textBounds = (await page.locator(".intro-main").boundingBox())!;
-    expect(portraitBounds.width).toBeLessThanOrEqual(260);
-    if (width >= 1024)
+    await expect(portrait).toHaveCSS("border-radius", "50%");
+    await expect(portrait).toHaveCSS("object-fit", "cover");
+    await expect(portrait).toHaveCSS("object-position", "50% 50%");
+    if (width >= 1024) {
+      expect(portraitBounds.width).toBeGreaterThanOrEqual(260);
+      expect(portraitBounds.width).toBeLessThanOrEqual(280);
       expect(portraitBounds.x).toBeGreaterThanOrEqual(
         textBounds.x + textBounds.width,
       );
-    else
+      expect(portraitBounds.y).toBeLessThan(textBounds.y + 40);
+    } else {
+      expect(portraitBounds.width).toBe(170);
+      expect(
+        Math.abs(portraitBounds.x + portraitBounds.width / 2 - width / 2),
+      ).toBeLessThan(1);
       expect(portraitBounds.y).toBeGreaterThanOrEqual(
         textBounds.y + textBounds.height,
       );
+      const buttons = (await page.locator(".intro .button-row").boundingBox())!;
+      expect(buttons.y).toBeGreaterThanOrEqual(
+        portraitBounds.y + portraitBounds.height,
+      );
+    }
     const introBounds = await page.locator(".intro").boundingBox();
     expect(introBounds!.y + introBounds!.height).toBeLessThan(900);
     const results = await new AxeBuilder({ page })

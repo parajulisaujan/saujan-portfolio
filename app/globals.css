@@ -164,8 +164,9 @@ button:focus-visible {
 .intro {
   display: grid;
   grid-template-columns: minmax(0, 2.25fr) minmax(0, 1fr);
-  gap: 60px;
-  align-items: center;
+  column-gap: 60px;
+  row-gap: 0;
+  align-items: start;
   padding: 66px 0 48px;
 }
 .intro .eyebrow {
@@ -247,16 +248,38 @@ button:focus-visible {
   margin: 0;
 }
 .intro-portrait {
-  width: 260px;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  width: 280px;
   max-width: 100%;
-  justify-self: end;
+  aspect-ratio: 1 / 1;
+  justify-self: center;
+  margin-top: 24px;
+  border-radius: 50%;
+  box-shadow:
+    0 0 28px 5px rgb(65 112 210 / 13%),
+    0 8px 22px rgb(24 35 50 / 9%);
 }
 .intro-portrait img {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: 6px;
-  border: 1px solid var(--line);
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+[data-theme="dark"] .intro-portrait {
+  box-shadow:
+    0 0 28px 5px rgb(83 130 220 / 15%),
+    0 8px 22px rgb(0 0 0 / 16%);
+}
+[data-theme="dark"] .intro-portrait img {
+  border-color: #d3dce9;
+}
+.intro-actions {
+  grid-column: 1;
 }
 .section {
   padding: 48px 0;
@@ -686,7 +709,7 @@ footer a {
     gap: 17px;
   }
   .intro {
-    gap: 35px;
+    column-gap: 35px;
     grid-template-columns: 2fr 1fr;
   }
   .intro h1 {
@@ -729,7 +752,7 @@ footer a {
     display: none !important;
   }
   .intro {
-    gap: 27px;
+    gap: 0;
     padding: 46px 0 38px;
     grid-template-columns: 1fr;
   }
@@ -737,8 +760,10 @@ footer a {
     font-size: 47px;
   }
   .intro-portrait {
-    width: 160px;
-    justify-self: start;
+    grid-column: 1;
+    grid-row: auto;
+    width: 170px;
+    margin-top: 22px;
   }
   .intro-copy {
     max-width: 630px;
