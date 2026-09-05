@@ -6,7 +6,8 @@ import {
   Linkedin,
   MapPin,
 } from "lucide-react";
-import { education, site } from "@/data/site";
+import Image from "next/image";
+import { site } from "@/data/site";
 
 export default function IntroSection() {
   return (
@@ -51,19 +52,16 @@ export default function IntroSection() {
           <MapPin size={14} /> {site.location}
         </p>
       </div>
-      <aside
-        className="intro-credential"
-        aria-label="Education and career focus"
-      >
-        <span className="credential-rule" />
-        <p className="eyebrow">RECENT GRADUATE</p>
-        <h2>B.S. Computer Science</h2>
-        <p>{education.institution}</p>
-        <p className="credential-honors">{education.date} · Cum Laude</p>
-        <p className="credential-focus">
-          Seeking new-graduate opportunities in software, backend, AI, and data.
-        </p>
-      </aside>
+      <div className="intro-portrait">
+        <Image
+          src="/images/saujan-parajuli.jpg"
+          alt="Saujan Parajuli"
+          width={400}
+          height={400}
+          sizes="(max-width: 850px) 160px, 260px"
+          preload
+        />
+      </div>
     </section>
   );
 }

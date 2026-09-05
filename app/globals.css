@@ -246,36 +246,17 @@ button:focus-visible {
   align-items: center;
   margin: 0;
 }
-.intro-credential {
-  padding-left: 25px;
-  border-left: 1px solid var(--line);
+.intro-portrait {
+  width: 260px;
+  max-width: 100%;
+  justify-self: end;
 }
-.credential-rule {
+.intro-portrait img {
   display: block;
-  width: 32px;
-  height: 3px;
-  background: var(--accent);
-  margin-bottom: 22px;
-}
-.intro-credential h2 {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.4px;
-  margin: 0 0 9px;
-}
-.intro-credential p:not(.eyebrow) {
-  font-size: 12px;
-  line-height: 1.8;
-  color: var(--muted);
-  margin: 0;
-}
-.intro-credential .credential-honors {
-  margin-top: 8px !important;
-  color: var(--accent) !important;
-}
-.intro-credential .credential-focus {
-  margin-top: 20px !important;
-  max-width: 240px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid var(--line);
 }
 .section {
   padding: 48px 0;
@@ -755,8 +736,9 @@ footer a {
   .intro h1 {
     font-size: 47px;
   }
-  .intro-credential {
-    display: none;
+  .intro-portrait {
+    width: 160px;
+    justify-self: start;
   }
   .intro-copy {
     max-width: 630px;

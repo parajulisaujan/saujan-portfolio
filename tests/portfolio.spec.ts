@@ -24,11 +24,9 @@ test("content, public files, and metadata are correct", async ({
   await expect(page.locator(".project-card")).toHaveCount(5);
   await expect(page.locator("#skills")).toContainText("C · C++ · Java (Basic)");
   for (const project of projects) {
-    const card = page
-      .locator(".project-card")
-      .filter({
-        has: page.getByRole("heading", { name: project.name, exact: true }),
-      });
+    const card = page.locator(".project-card").filter({
+      has: page.getByRole("heading", { name: project.name, exact: true }),
+    });
     await expect(
       card.getByRole("link", { name: `View ${project.name} code on GitHub` }),
     ).toHaveAttribute("href", project.code);
@@ -130,6 +128,26 @@ test("responsive layouts have no overflow and pass accessibility checks", async 
       ),
     ).toBe(true);
     await expect(page.locator("h1")).toBeVisible();
+    const portrait = page
+      .locator(".intro")
+      .getByRole("img", { name: "Saujan Parajuli", exact: true });
+    await expect(portrait).toBeVisible();
+    await expect(portrait).toHaveJSProperty("complete", true);
+    expect(
+      await portrait.evaluate((img: HTMLImageElement) => img.naturalWidth),
+    ).toBeGreaterThan(0);
+    await expect(portrait).toHaveAttribute("src", /\/_next\/image\?/);
+    const portraitBounds = (await portrait.boundingBox())!;
+    const textBounds = (await page.locator(".intro-main").boundingBox())!;
+    expect(portraitBounds.width).toBeLessThanOrEqual(260);
+    if (width >= 1024)
+      expect(portraitBounds.x).toBeGreaterThanOrEqual(
+        textBounds.x + textBounds.width,
+      );
+    else
+      expect(portraitBounds.y).toBeGreaterThanOrEqual(
+        textBounds.y + textBounds.height,
+      );
     const introBounds = await page.locator(".intro").boundingBox();
     expect(introBounds!.y + introBounds!.height).toBeLessThan(900);
     const results = await new AxeBuilder({ page })
